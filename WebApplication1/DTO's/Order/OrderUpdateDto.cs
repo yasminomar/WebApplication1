@@ -6,14 +6,8 @@ namespace WebApplication1.DTO
     {
         public Guid Id { get; init; }
         public Guid CartId { get; init; }
-        public string Street { get; init; }
-        public string Apartment { get; init; }
-        public int zip { get; init; }
-        public string FirstName { init; get; }
-        public string LastName { init; get; }
-        public string Phone { init; get; }
-        public string Email { init; get; }
-        public string Status { init; get; }
+        public string ShipmentAddress { get; set; }
+        public string PaymentMethod { get; set; }
 
     }
 }

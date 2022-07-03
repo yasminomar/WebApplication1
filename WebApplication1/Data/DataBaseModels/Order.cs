@@ -12,15 +12,9 @@ namespace WebApplication1.Models
         public Guid CartId { get; set; }
         public virtual Cart Cart { get; set; }
 
-        public string Street { get; set; }
-        public string Apartment { get; set; }
-        public int zip { get; set; }
-        public string FirstName { set; get; }
-        public string LastName { set; get; }
-        public string Phone { set; get; }
-        public string Email { set; get; }
-        public string Status { set; get; }
-
+        public string ShipmentAddress { get; set; }
+        public string PaymentMethod { get; set; }
+ 
 
 
     }

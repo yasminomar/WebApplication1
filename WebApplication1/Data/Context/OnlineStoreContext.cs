@@ -21,7 +21,7 @@ namespace WebApplication1.Models
         public DbSet<Order> Order { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<ProductInCart> ProductInCart { get; set; }
-       // public DbSet<ProductParameters> ProductParameters { get; set; }
+        public DbSet<OrderHistory> OrderHistory { get; set; }
 
 
     }

@@ -8,15 +8,8 @@ namespace WebApplication1.DTO
         public Guid Id { get; init; }
         public virtual ApplicationUser ApplicationUser { get; init; }
         public ChildCartReadDto Cart { get; init; }
-
-        public string Street { get; init; }
-        public string Apartment { get; init; }
-        public int zip { get; init; }
-        public string FirstName { get; init; }
-        public string LastName { get; init; }
-        public string Phone { get; init; }
-        public string Email { get; init; }
-        public string Status { get; init; }
+        public string ShipmentAddress { get; set; }
+        public string PaymentMethod {get; set;}
 
 
     }

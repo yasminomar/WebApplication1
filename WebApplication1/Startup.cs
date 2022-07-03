@@ -69,6 +69,7 @@ namespace WebApplication1
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IProductInCartRepository, ProductInCartRepository>();
+            services.AddScoped<IOrderHistoryRepository, OrderHistoryRepository>();
 
             //inject user manager, role manager
             services.AddIdentity<ApplicationUser, IdentityRole>(options=>

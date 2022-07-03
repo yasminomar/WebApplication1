@@ -7,6 +7,11 @@ using WebApplication1.Models;
 using WebApplication1.Repository;
 using AutoMapper;
 using WebApplication1.DTO;
+using System.Linq;
+using WebApplication1.Data.DataBaseModels;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication1.Controllers
 {
@@ -14,14 +19,21 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IOrderRepository orderRepo;
+        private readonly IOrderHistoryRepository orderHistoryRepo;
         private readonly ICartRepository cartRepo;
         private readonly IMapper _mapper;
+        
 
-        public OrderController(IOrderRepository orderRepo, ICartRepository cartRepo, IMapper mapper)
+
+        public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository orderRepo, IOrderHistoryRepository orderHistoryRepo, ICartRepository cartRepo, IMapper mapper)
         {
+            this.userManager = userManager;
             this.orderRepo = orderRepo;
+            this.orderHistoryRepo = orderHistoryRepo;
             this.cartRepo = cartRepo;
+
             _mapper = mapper;
 
         }
@@ -48,10 +60,20 @@ namespace WebApplication1.Controllers
         }
 
 
+        [HttpGet("GetOrderByCartId/{cartId}")]
+        //[Authorize]
+        public ActionResult<OrderReadDto> GetOrderByCartId(Guid cartId)
+        {
+            Order order = orderRepo.GetOrderByCartId(cartId);
+            return _mapper.Map<OrderReadDto>(order);
+        }
+
+
+        
 
         [HttpPost]
         //[Authorize]
-        public IActionResult Create(OrderWriteDto order)
+        public async Task<IActionResult> Create(OrderWriteDto order)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +85,21 @@ namespace WebApplication1.Controllers
                     o.Cart = cart;
                     orderRepo.Create(o);
                     orderRepo.SaveChanges();
+                    var ps=string.Join(',', cart.Products.Select(p=>p.Id.ToString()).ToArray());
+                    var totalPrice = cart.Products.Sum(p => p.Quantity * p.Product.UnitPrice);
+                    var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+                    var user = await userManager.FindByNameAsync(username);
+                    orderHistoryRepo.AddOrderHistory(new OrderHistory
+                    {
+                        UserId = user.Id,
+                        Id = Guid.NewGuid(),
+                        PaymentMethod = o.PaymentMethod,
+                        ShippmentAddress = o.ShipmentAddress,
+                        ProductsIds = ps,
+                        TotalPrice = totalPrice
+                    });
+                    orderHistoryRepo.SaveChanges();
+
                     return Ok(_mapper.Map<OrderReadDto>(o));
                 }
                 catch (Exception ex)
