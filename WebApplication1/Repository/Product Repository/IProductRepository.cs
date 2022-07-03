@@ -11,7 +11,11 @@ namespace WebApplication1.Repository
         List<Products> GetGroup(List<Guid> ids);
         List<ProductGroupingOutput> GetAllProductsSorted(ProductParameters productParameters);
         void DeleteProductsByCategoryId(Guid categoryId);
-        
+        int GetNumOfProducts();
+
+
+
+
 
     }
 }

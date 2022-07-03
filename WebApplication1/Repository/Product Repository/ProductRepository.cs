@@ -34,20 +34,20 @@ namespace WebApplication1.Repository
                    .Products
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
+                   .AsEnumerable()
                    .GroupBy(i => new { i.Category.Name, i.Category.Id })
                    .Select(g => new ProductGroupingOutput
                    {
                        CategoryId=g.Key.Id,
                        CategoryName=g.Key.Name,
-                       Products=g.ToList()
+                       Products=g.OrderBy(p => p.EnglishName).ToList()
                    })
                    .ToList();
-           // .AsEnumerable().OrderBy(p => p.EnglishName)
-
-
-           // return _context.GroupBy(i => new { i.Category.Name })
+        }
+        public int GetNumOfProducts()
+        {
+            return _context.Products.Count();
 
         }
-        //public 
     }
 }

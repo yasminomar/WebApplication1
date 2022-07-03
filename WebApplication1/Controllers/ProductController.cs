@@ -49,10 +49,17 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("sortedProduct")]
-        public ActionResult<List<ProductGroupingOutputReadDto>> GetProductSorted(ProductParameters productParameters)
+        public ActionResult<ProductPaginationReadDto> GetProductSorted(ProductParameters productParameters)
         {
             var productsFromDB = productRepo.GetAllProductsSorted(productParameters);
-            return _mapper.Map<List<ProductGroupingOutputReadDto>>(productsFromDB);
+            var products= _mapper.Map<List<ProductGroupingOutputReadDto>>(productsFromDB);
+            var totalCount= productRepo.GetNumOfProducts();
+            return new ProductPaginationReadDto
+            {
+                TotalCount = totalCount,
+                Products = products
+
+            };
         }
 
 

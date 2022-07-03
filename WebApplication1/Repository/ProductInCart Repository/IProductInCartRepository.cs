@@ -10,6 +10,8 @@ namespace WebApplication1.Repository
         void DeleteProductsInCartByProductId(Guid productId);
         void DeleteProductsInCartByCartId(Guid cartId);
         List<ProductInCart> GetProductsInCartByCartId(Guid cartId);
+        Guid GetProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId);
+
 
 
 

@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductInCartController : ControllerBase
     {
         private readonly IProductInCartRepository productInCartRepo;
@@ -48,14 +48,26 @@ namespace WebApplication1.Controllers
             return _mapper.Map<ProductInCartReadDto>(productInCart);
         }
         [HttpGet]
-        [Route("GetProductsInCartByCartId")]
+        [Route("{cartId:Guid}")]
         public ActionResult<IEnumerable<ProductInCartReadDto>> GetProductsInCartByCartId(Guid cartId)
         {
             var productInCartFromDB = productInCartRepo.GetProductsInCartByCartId(cartId);
             return _mapper.Map<List<ProductInCartReadDto>>(productInCartFromDB);
 
         }
-        
+
+
+
+
+
+
+        [HttpGet]
+        [Route("getProd/{cartId:Guid}/{productId:Guid}")]
+        public Guid GetProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId)
+        {
+            return productInCartRepo.GetProductInCartIdByCartIdAndProductId(cartId, productId);
+
+        }
 
 
         [HttpPost]
@@ -88,7 +100,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, ProductInCartUpdateDto productInCart)
+        public IActionResult Update( ProductInCartUpdateDto productInCart, Guid id)
         {
             if (ModelState.IsValid)
             {
@@ -119,6 +131,34 @@ namespace WebApplication1.Controllers
 
 
 
+        //[HttpPut("updateQuantity/{id}")]
+        //public IActionResult updateQuantity(Guid cartId, ProductInCartWriteDto productInCart)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var productInCartToEdit = productInCartRepo.GetProductsInCartByCartId(cartId);
+        //            if (productInCartToEdit is null)
+        //            {
+        //                return NotFound();
+        //            }
+        //            _mapper.Map(productInCart, productInCartToEdit);
+        //            productInCartRepo.Update(productInCartToEdit);
+        //            productInCartRepo.SaveChanges();
+        //            return Ok(_mapper.Map<ProductInCartReadDto>(productInCartToEdit));
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return BadRequest(ex.Message);
+        //        }
+        //    }
+        //    return BadRequest(ModelState);
+        //}
+
+
+
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
@@ -128,6 +168,7 @@ namespace WebApplication1.Controllers
                 {
                     var deletedproductInCart=productInCartRepo.GetById(id);
                     productInCartRepo.Delete(id);
+                    productInCartRepo.SaveChanges();
                     return Ok(_mapper.Map<ProductInCartReadDto>(deletedproductInCart));
 
                 }
@@ -138,5 +179,32 @@ namespace WebApplication1.Controllers
             }
             return NotFound();
         }
+
+
+
+
+
+        //[HttpDelete("{cartId}/{productId}")]
+        //public IActionResult DeleteProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId)
+        //{
+        //    if (productInCartRepo.GetProductInCartIdByCartIdAndProductId(cartId, productId) != null)
+        //    {
+        //        try
+        //        {
+        //            var deletedproductInCart = productInCartRepo.GetById(id);
+        //            productInCartRepo.Delete(id);
+        //            return Ok(_mapper.Map<ProductInCartReadDto>(deletedproductInCart));
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return BadRequest(ex.Message);
+        //        }
+        //    }
+        //    return NotFound();
+        //}
+
+        
     }
+
 }

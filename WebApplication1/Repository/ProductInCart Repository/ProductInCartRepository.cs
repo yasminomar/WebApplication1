@@ -41,6 +41,17 @@ namespace WebApplication1.Repository
             return _context.ProductInCart.Where(i => i.CartId == cartId).ToList();
 
         }
+        public Guid GetProductInCartIdByCartIdAndProductId(Guid cartId,Guid productId)
+        {
+            var productInCart = _context.ProductInCart.FirstOrDefault(i => i.CartId == cartId && i.ProductId == productId);
+            return productInCart.Id;
+
+        }
+        //public void DeleteProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId)
+        //{
+        //    var productInCart = _context.ProductInCart.FirstOrDefault(i => i.CartId == cartId && i.ProductId == productId);
+        //    _context.ProductInCart.Remove(productInCart);
+        //}
 
 
     }
