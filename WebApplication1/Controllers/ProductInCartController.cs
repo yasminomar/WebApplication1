@@ -184,6 +184,40 @@ namespace WebApplication1.Controllers
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+        [HttpDelete("DeleteProductsInCartByCartId/{cartId}")]
+        public ActionResult DeleteProductsInCartByCartId(Guid cartId)
+        {
+
+                try
+                {
+                var deletedproductInCart = productInCartRepo.GetProductsInCartByCartId(cartId);
+                    productInCartRepo.DeleteProductsInCartByCartId(cartId);
+                    productInCartRepo.SaveChanges();
+                    return Ok(_mapper.Map<List<ProductInCartReadDto>>(deletedproductInCart));
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+         
+        }
+        
+
+
+
+
         //[HttpDelete("{cartId}/{productId}")]
         //public IActionResult DeleteProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId)
         //{
@@ -204,7 +238,7 @@ namespace WebApplication1.Controllers
         //    return NotFound();
         //}
 
-        
+
     }
 
 }

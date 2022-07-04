@@ -12,6 +12,10 @@ namespace WebApplication1.Repository
         List<ProductGroupingOutput> GetAllProductsSorted(ProductParameters productParameters);
         void DeleteProductsByCategoryId(Guid categoryId);
         int GetNumOfProducts();
+        List<Products> GetProductsByIds(string productsIds);
+        void UpdateProductQuantity(Guid id, int quantity);
+
+
 
 
 

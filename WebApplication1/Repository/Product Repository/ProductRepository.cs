@@ -49,5 +49,16 @@ namespace WebApplication1.Repository
             return _context.Products.Count();
 
         }
+        public List<Products> GetProductsByIds(string productsIds)
+        {
+            return _context.Products.Where(p => productsIds.Contains(p.Id.ToString())).ToList();
+        }
+        public void UpdateProductQuantity(Guid id,int quantity)
+        {
+            var Product = _context.Products.FirstOrDefault(i => i.Id == id);
+            Product.Quantity = quantity;
+        }
+
+
     }
 }

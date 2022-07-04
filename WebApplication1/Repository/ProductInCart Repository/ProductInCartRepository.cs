@@ -38,7 +38,8 @@ namespace WebApplication1.Repository
 
         public List<ProductInCart> GetProductsInCartByCartId(Guid cartId)
         {
-            return _context.ProductInCart.Where(i => i.CartId == cartId).ToList();
+            var p= _context.ProductInCart.Where(i => i.CartId == cartId).ToList();
+            return p;
 
         }
         public Guid GetProductInCartIdByCartIdAndProductId(Guid cartId,Guid productId)

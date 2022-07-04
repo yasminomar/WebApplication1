@@ -16,6 +16,14 @@ namespace WebApplication1.Repository
             return _context.Order.FirstOrDefault(i=>i.CartId == cartId);  
         }
 
-    
+        public void DeleteOrderByCartId(Guid cartId)
+        {
+
+          var deletedOrder=  _context.Order.FirstOrDefault(i => i.CartId == cartId);
+            _context.Order.Remove(deletedOrder);
+
+        }
+
+
     }
 }

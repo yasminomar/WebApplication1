@@ -143,6 +143,34 @@ namespace WebApplication1.Controllers
             }
             return BadRequest(ModelState);
         }
+        
+       [HttpPut("{id}/{quantity}")]
+        // [Authorize(Policy = "Admin")]
+        public ActionResult UpdateProductQuantity(Guid id,int quantity)
+        {
+            var productToEdit = productRepo.GetById(id);
+            if(productToEdit == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                productRepo.UpdateProductQuantity(id, quantity);
+                productRepo.SaveChanges();
+                return Ok(_mapper.Map<ProductReadDto>(productToEdit));
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,6 +12,7 @@ using WebApplication1.Data.DataBaseModels;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using WebApplication1.DTO_s.Order;
 
 namespace WebApplication1.Controllers
 {
@@ -21,16 +22,18 @@ namespace WebApplication1.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IOrderRepository orderRepo;
+        private readonly IProductRepository productRepo;
         private readonly IOrderHistoryRepository orderHistoryRepo;
         private readonly ICartRepository cartRepo;
         private readonly IMapper _mapper;
-        
 
 
-        public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository orderRepo, IOrderHistoryRepository orderHistoryRepo, ICartRepository cartRepo, IMapper mapper)
+
+        public OrderController(UserManager<ApplicationUser> userManager, IOrderRepository orderRepo, IProductRepository productRepo, IOrderHistoryRepository orderHistoryRepo, ICartRepository cartRepo, IMapper mapper)
         {
             this.userManager = userManager;
             this.orderRepo = orderRepo;
+            this.productRepo = productRepo;
             this.orderHistoryRepo = orderHistoryRepo;
             this.cartRepo = cartRepo;
 
@@ -46,6 +49,20 @@ namespace WebApplication1.Controllers
         {
             var ordersFromDB = orderRepo.GetAll();
             return _mapper.Map<List<OrderReadDto>>(ordersFromDB);
+
+        }
+
+        [HttpGet]
+        [Route("GetOrderHistory")]
+        //[Authorize]
+        public async Task<ActionResult<List<OrderHistoryReadDto>>> GetOrderHistory()
+        {
+            var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var user = await userManager.FindByNameAsync(username);
+            var ordersFromDB = orderHistoryRepo.GetOrders(user.Id);
+            var orders=_mapper.Map<List<OrderHistoryReadDto>>(ordersFromDB);
+            orders.ForEach(p => p.Products = _mapper.Map<List<ProductReadDto>>(productRepo.GetProductsByIds(p.ProductsIds)));
+            return orders;
 
         }
 
@@ -69,7 +86,7 @@ namespace WebApplication1.Controllers
         }
 
 
-        
+
 
         [HttpPost]
         //[Authorize]
@@ -81,11 +98,11 @@ namespace WebApplication1.Controllers
                 {
                     var o = _mapper.Map<Order>(order);
                     o.Id = Guid.NewGuid();
-                    var cart=cartRepo.GetById(order.CartId);
+                    var cart = cartRepo.GetById(order.CartId);
                     o.Cart = cart;
                     orderRepo.Create(o);
                     orderRepo.SaveChanges();
-                    var ps=string.Join(',', cart.Products.Select(p=>p.Id.ToString()).ToArray());
+                    var ps = string.Join(',', cart.Products.Select(p => p.Product.Id.ToString()).ToArray());
                     var totalPrice = cart.Products.Sum(p => p.Quantity * p.Product.UnitPrice);
                     var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                     var user = await userManager.FindByNameAsync(username);
@@ -152,7 +169,7 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    var deletedOrder=orderRepo.GetById(id);
+                    var deletedOrder = orderRepo.GetById(id);
                     orderRepo.Delete(id);
                     orderRepo.SaveChanges();
                     return Ok(_mapper.Map<OrderReadDto>(deletedOrder));
@@ -166,5 +183,27 @@ namespace WebApplication1.Controllers
             }
             return NotFound();
         }
+
+
+        [HttpDelete("DeleteOrderByCartId/{cartId}")]
+        //[Authorize(Policy = "Admin")]
+        public IActionResult DeleteOrderByCartId(Guid cartId)
+        {
+           
+                try
+                {
+                    var deletedOrder = orderRepo.GetOrderByCartId(cartId);
+                    orderRepo.DeleteOrderByCartId(cartId);
+                    orderRepo.SaveChanges();
+                    return Ok(_mapper.Map<OrderReadDto>(deletedOrder));
+
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+        }
+        
     }
 }

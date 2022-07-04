@@ -2,6 +2,7 @@
 using System.Linq;
 using WebApplication1.Data.DataBaseModels;
 using WebApplication1.DTO;
+using WebApplication1.DTO_s.Order;
 using WebApplication1.DTO_s.Products;
 using WebApplication1.DTO_s.User;
 using WebApplication1.Models;
@@ -31,6 +32,7 @@ namespace Day2.AutoMapper
             CreateMap<ParentCategoryUpdateDto, ParentCategory>();
 
             CreateMap<Order, OrderReadDto>();
+            CreateMap<OrderHistory, OrderHistoryReadDto>();
             CreateMap<OrderWriteDto, Order>();
             CreateMap<OrderUpdateDto, Order>();
 
@@ -40,6 +42,10 @@ namespace Day2.AutoMapper
             CreateMap<CartUpdateDto, Cart>();
 
             CreateMap<ProductInCart, ProductInCartReadDto>();
+            CreateMap<ProductInCart, ProductInCartReadDto>().ForMember(p => p.Product, o => o.MapFrom(p => p.Product));
+
+
+
             CreateMap<ProductInCartWriteDto, ProductInCart>();
             CreateMap<ProductInCartUpdateDto, ProductInCart>();
 
