@@ -40,10 +40,29 @@ namespace WebApplication1.Repository
                    {
                        CategoryId=g.Key.Id,
                        CategoryName=g.Key.Name,
-                       Products=g.OrderBy(p => p.EnglishName).ToList()
+                       Products=g.OrderBy(p => p.EnglishName).Where(p=>p.Quantity>0).ToList()
                    })
                    .ToList();
         }
+
+
+        public List<ProductGroupingOutput> getFilteredProducts(ProductParameters productParameters,string productName)
+        {
+            return _context
+                   .Products
+                   .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
+                   .Take(productParameters.PageSize)
+                   .AsEnumerable()
+                   .GroupBy(i => new { i.Category.Name, i.Category.Id })
+                   .Select(g => new ProductGroupingOutput
+                   {
+                       CategoryId = g.Key.Id,
+                       CategoryName = g.Key.Name,
+                       Products = g.OrderBy(p => p.EnglishName).Where(p => p.Quantity > 0 && p.EnglishName.ToLower().Contains(productName.ToLower())).ToList()
+                   })
+                   .ToList();
+        }
+        
         public int GetNumOfProducts()
         {
             return _context.Products.Count();

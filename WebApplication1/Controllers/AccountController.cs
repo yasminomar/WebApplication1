@@ -88,7 +88,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("AdminRegister")]
-        [Authorize(Policy = "Admin")]
+       // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> RegisterAdmin(RegisterDto registerDto)
         {
             if (ModelState.IsValid == false)

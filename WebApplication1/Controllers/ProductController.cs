@@ -63,7 +63,25 @@ namespace WebApplication1.Controllers
         }
 
 
+        [HttpPost]
+        [Route("sortedProduct/getFilteredProducts/{productName}")]
+        public ActionResult<ProductPaginationReadDto> getFilteredProducts(ProductParameters productParameters,string productName)
+        {
+            var productsFromDB = productRepo.getFilteredProducts(productParameters, productName);
+            var products = _mapper.Map<List<ProductGroupingOutputReadDto>>(productsFromDB);
+            var totalCount = productRepo.GetNumOfProducts();
+            return new ProductPaginationReadDto
+            {
+                TotalCount = totalCount,
+                Products = products
 
+            };
+        }
+
+
+
+
+        
 
         [HttpGet("{id}")]
         public ActionResult<ProductReadDto> GetById(Guid id)
@@ -155,7 +173,8 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                productRepo.UpdateProductQuantity(id, quantity);
+
+                productRepo.UpdateProductQuantity(id, productToEdit.Quantity-quantity);
                 productRepo.SaveChanges();
                 return Ok(_mapper.Map<ProductReadDto>(productToEdit));
 

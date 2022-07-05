@@ -80,6 +80,7 @@ namespace WebApplication1.Controllers
                     var p = _mapper.Map<ProductInCart>(productInCart);
                     p.Id = Guid.NewGuid();
                     var product = productRepo.GetById(productInCart.ProductId);
+                   
                     var cart = cartRepo.GetById(productInCart.CartId);
                     p.Product = product;
                     p.Cart = cart;
@@ -116,6 +117,10 @@ namespace WebApplication1.Controllers
                         return NotFound();
                     }
                     _mapper.Map(productInCart, productInCartToEdit);
+                    if (productInCartToEdit.Product.Quantity < productInCartToEdit.Quantity)
+                    {
+                        return BadRequest(new {message= "Sorry it's the last piece " });
+                    }
                     productInCartRepo.Update(productInCartToEdit);
                     productInCartRepo.SaveChanges();
                     return Ok(_mapper.Map<ProductInCartReadDto>(productInCartToEdit));
@@ -202,9 +207,10 @@ namespace WebApplication1.Controllers
                 try
                 {
                 var deletedproductInCart = productInCartRepo.GetProductsInCartByCartId(cartId);
+                var output = _mapper.Map<List<ProductInCartReadDto>>(deletedproductInCart);
                     productInCartRepo.DeleteProductsInCartByCartId(cartId);
                     productInCartRepo.SaveChanges();
-                    return Ok(_mapper.Map<List<ProductInCartReadDto>>(deletedproductInCart));
+                    return Ok(output);
 
                 }
                 catch (Exception ex)

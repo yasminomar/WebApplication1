@@ -66,6 +66,22 @@ namespace WebApplication1.Controllers
 
         }
 
+        
+        [HttpGet("GetUserId")]
+        //[Authorize]
+        public async Task<string> GetUserId()
+        {
+            var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var user = await userManager.FindByNameAsync(username);
+            return user.Id;
+
+        }
+
+
+
+
+
+
 
 
         [HttpGet("{id}")]
@@ -85,6 +101,31 @@ namespace WebApplication1.Controllers
             return _mapper.Map<OrderReadDto>(order);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpGet("userId/{userId}")]
+        ////[Authorize]
+        //public ActionResult<OrderReadDto> GetOrderHistoryByUserId(string userId)
+        //{
+        //    Order order = orderRepo.GetOrderHistoryByUserId(userId);
+        //    return _mapper.Map<OrderReadDto>(order);
+        //}
+
+
+
+        
 
 
 
