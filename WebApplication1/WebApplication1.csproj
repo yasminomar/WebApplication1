@@ -21,6 +21,9 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  		<Content Include="Resources\img\*.*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
   </ItemGroup>
 
 </Project>

@@ -265,7 +265,7 @@ namespace WebApplication1.Controllers
                     return BadRequest(ex.Message);
                 }
             }
-            return BadRequest(ModelState);
+            return BadRequest(ModelState.FirstOrDefault());
         }
 
 
