@@ -218,7 +218,7 @@ namespace WebApplication1.Controllers
                         {
                             var file = Request.Form.Files[0];
 
-                            if (file.Length > 1_000_00)
+                            if (file.Length > 1_000_000)
                             {
                                 return BadRequest();
                             }
