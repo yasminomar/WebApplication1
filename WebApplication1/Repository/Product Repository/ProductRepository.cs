@@ -28,39 +28,44 @@ namespace WebApplication1.Repository
 
         }
 
-       public List<ProductGroupingOutput> GetAllProductsSorted(ProductParameters productParameters)
+       public List<Products> GetAllProductsSorted(ProductParameters productParameters)
         {
             return _context
                    .Products
+                   .OrderBy(p => p.CategoryId)
+                   .ThenBy(p => p.EnglishName)
+                   .Where(p => p.Quantity > 0)
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
-                   .AsEnumerable()
-                   .GroupBy(i => new { i.Category.Name, i.Category.Id })
-                   .Select(g => new ProductGroupingOutput
-                   {
-                       CategoryId=g.Key.Id,
-                       CategoryName=g.Key.Name,
-                       Products=g.OrderBy(p => p.EnglishName).Where(p=>p.Quantity>0).ToList()
-                   })
+                   //.AsEnumerable()
+                   //.GroupBy(i => new { i.Category.Name, i.Category.Id })
+                   //.Select(g => new ProductGroupingOutput
+                   //{
+                   //    CategoryId=g.Key.Id,
+                   //    CategoryName=g.Key.Name,
+                   //    Products=g.OrderBy(p => p.EnglishName).Where(p=>p.Quantity>0).ToList()
+                   //})
                    .ToList();
         }
 
 
-        public List<ProductGroupingOutput> getFilteredProducts(ProductParameters productParameters,string productName)
+        public List<Products> getFilteredProducts(ProductParameters productParameters,string productName)
         {
             return _context
                    .Products
-                   .Where(p => p.Quantity > 0 && p.EnglishName.Contains(productName,StringComparison.InvariantCultureIgnoreCase)).ToList()
+                   .OrderBy(p => p.CategoryId)
+                   .ThenBy(p => p.EnglishName)
+                   .Where(p => p.Quantity > 0 && p.EnglishName.Contains(productName,StringComparison.InvariantCultureIgnoreCase))
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
-                   .AsEnumerable()
-                   .GroupBy(i => new { i.Category.Name, i.Category.Id })
-                   .Select(g => new ProductGroupingOutput
-                   {
-                       CategoryId = g.Key.Id,
-                       CategoryName = g.Key.Name,
-                       Products = g.OrderBy(p => p.EnglishName).ToList()
-                   })
+                   //.AsEnumerable()
+                   //.GroupBy(i => new { i.Category.Name, i.Category.Id })
+                   //.Select(g => new ProductGroupingOutput
+                   //{
+                   //    CategoryId = g.Key.Id,
+                   //    CategoryName = g.Key.Name,
+                   //    Products = g.OrderBy(p => p.EnglishName).ToList()
+                   //})
                    .ToList();
         }
         
