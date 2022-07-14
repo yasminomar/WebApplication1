@@ -52,7 +52,7 @@ namespace WebApplication1.Controllers
         public ActionResult<ProductPaginationReadDto> GetProductSorted(ProductParameters productParameters)
         {
             var productsFromDB = productRepo.GetAllProductsSorted(productParameters);
-            var products= _mapper.Map<List<ProductGroupingOutputReadDto>>(productsFromDB);
+            var products= _mapper.Map<List<ProductReadDto>>(productsFromDB);
             var totalCount= productRepo.GetNumOfProducts();
             return new ProductPaginationReadDto
             {
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
         public ActionResult<ProductPaginationReadDto> getFilteredProducts(ProductParameters productParameters,string productName)
         {
             var productsFromDB = productRepo.getFilteredProducts(productParameters, productName);
-            var products = _mapper.Map<List<ProductGroupingOutputReadDto>>(productsFromDB);
+            var products = _mapper.Map<List<ProductReadDto>>(productsFromDB);
             var totalCount = productRepo.GetNumOfProducts();
             return new ProductPaginationReadDto
             {
