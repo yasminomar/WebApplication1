@@ -14,7 +14,6 @@ namespace Day2.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<Products, ProductReadDto>();
-            CreateMap<ProductGroupingOutput, ProductGroupingOutputReadDto>();
             CreateMap<ProductWriteDto, Products>();
             CreateMap<ProductUpdateDto, Products>();
 
