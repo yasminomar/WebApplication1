@@ -50,6 +50,7 @@ namespace WebApplication1.Repository
         {
             return _context
                    .Products
+                   .Where(p => p.Quantity > 0 && p.EnglishName.Contains(productName,StringComparison.InvariantCultureIgnoreCase)).ToList()
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
                    .AsEnumerable()
@@ -58,7 +59,7 @@ namespace WebApplication1.Repository
                    {
                        CategoryId = g.Key.Id,
                        CategoryName = g.Key.Name,
-                       Products = g.OrderBy(p => p.EnglishName).Where(p => p.Quantity > 0 && p.EnglishName.ToLower().Contains(productName.ToLower())).ToList()
+                       Products = g.OrderBy(p => p.EnglishName).ToList()
                    })
                    .ToList();
         }

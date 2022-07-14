@@ -152,31 +152,7 @@ namespace WebApplication1.Controllers
 
                     return GenerateToken(userClaims.ToList());
 
-                    //var claims = new List<Claim>();
-                    //claims.Add(new Claim(ClaimTypes.NameIdentifier, userModel.Id));
-                    //claims.Add(new Claim(ClaimTypes.Name, userModel.UserName));
-                    //claims.Add(new Claim(ClaimTypes.Role, "customer"));
-                    //var roles = await userManager.GetRolesAsync(userModel);
-                    //foreach(var role in roles)
-                    //{
-                    //    claims.Add(new Claim(ClaimTypes.Role, role));
-                    //}
-                    //claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-                    ////////////////////////Token/////////////////////////
-                    //var key = 
-                    //    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecrtKey"]));
-                    //var token = new JwtSecurityToken(
-                    //    audience: configuration["JWT:ValidAudience"],
-                    //    issuer: configuration["JWT:ValidIssuer"],
-                    //    expires: DateTime.Now.AddHours(1),
-                    //    claims: claims,
-                    //    signingCredentials:new SigningCredentials(key,SecurityAlgorithms.HmacSha256)
-                    //    );
-                    //return Ok(new
-                    //{
-                    //    token=new JwtSecurityTokenHandler().WriteToken(token) ,
-                    //    expiration=token.ValidTo
-                    //});
+              
 
                 }
                 else
