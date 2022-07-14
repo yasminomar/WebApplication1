@@ -55,7 +55,7 @@ namespace WebApplication1.Repository
                    .Products
                    .OrderBy(p => p.CategoryId)
                    .ThenBy(p => p.EnglishName)
-                   .Where(p => p.Quantity > 0 && p.EnglishName.Contains(productName,StringComparison.InvariantCultureIgnoreCase))
+                   .Where(p => p.Quantity > 0 && p.EnglishName.Contains(productName))
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
                    //.AsEnumerable()
