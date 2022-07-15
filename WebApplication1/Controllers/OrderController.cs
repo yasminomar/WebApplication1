@@ -154,7 +154,7 @@ namespace WebApplication1.Controllers
                         PaymentMethod = o.PaymentMethod,
                         ShippmentAddress = o.ShipmentAddress,
                         ProductsIds = ps,
-                        TotalPrice = totalPrice
+                        TotalPrice = totalPrice,
                     });
                     orderHistoryRepo.SaveChanges();
 
