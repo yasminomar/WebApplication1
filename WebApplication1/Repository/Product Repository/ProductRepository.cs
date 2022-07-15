@@ -24,6 +24,7 @@ namespace WebApplication1.Repository
             foreach (var product in products)
             {
                 _context.Products.Remove(product);
+                _context.SaveChanges();
             }
 
         }
@@ -37,14 +38,6 @@ namespace WebApplication1.Repository
                    .Where(p => p.Quantity > 0)
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
-                   //.AsEnumerable()
-                   //.GroupBy(i => new { i.Category.Name, i.Category.Id })
-                   //.Select(g => new ProductGroupingOutput
-                   //{
-                   //    CategoryId=g.Key.Id,
-                   //    CategoryName=g.Key.Name,
-                   //    Products=g.OrderBy(p => p.EnglishName).Where(p=>p.Quantity>0).ToList()
-                   //})
                    .ToList();
         }
 

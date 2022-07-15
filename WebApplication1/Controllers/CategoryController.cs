@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using WebApplication1.Data.DataBaseModels;
 using WebApplication1.DTO;
+using WebApplication1.DTO_s.Categories;
 using WebApplication1.Models;
 using WebApplication1.Repository;
 
@@ -73,6 +75,20 @@ namespace WebApplication1.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPost]
+        [Route("sortedCategory")]
+        public ActionResult<CategoryPaginationReadDto> GetCategoriesSorted(CategoryParameters categoryParameters)
+        {
+            var categoriesFromDB = categoryRepo.GetAllCategoriesSorted(categoryParameters);
+            var categories = _mapper.Map<List<CategoryReadDto>>(categoriesFromDB);
+            var totalCount = categoryRepo.GetNumOfCategories();
+            return new CategoryPaginationReadDto
+            {
+                TotalCount = totalCount,
+                Categories = categories
+
+            };
+        }
 
 
         [HttpPut("{id}")]
@@ -118,6 +134,7 @@ namespace WebApplication1.Controllers
                 {
                     var deletedCategory=categoryRepo.GetById(id);
                     categoryRepo.Delete(id);
+                    categoryRepo.SaveChanges();
                     productRepo.DeleteProductsByCategoryId(id);
                     return Ok(_mapper.Map<CategoryReadDto>(deletedCategory));
                 }

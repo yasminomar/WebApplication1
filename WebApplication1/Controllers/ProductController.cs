@@ -49,12 +49,12 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("sortedProduct")]
-        public ActionResult<ProductPaginationReadDto> GetProductSorted(ProductParameters productParameters)
+        public ActionResult<CategoryPaginationReadDto> GetProductSorted(ProductParameters productParameters)
         {
             var productsFromDB = productRepo.GetAllProductsSorted(productParameters);
             var products= _mapper.Map<List<ProductReadDto>>(productsFromDB);
             var totalCount= productRepo.GetNumOfProducts();
-            return new ProductPaginationReadDto
+            return new CategoryPaginationReadDto
             {
                 TotalCount = totalCount,
                 Products = products
@@ -65,12 +65,12 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("sortedProduct/getFilteredProducts/{productName}")]
-        public ActionResult<ProductPaginationReadDto> getFilteredProducts(ProductParameters productParameters,string productName)
+        public ActionResult<CategoryPaginationReadDto> getFilteredProducts(ProductParameters productParameters,string productName)
         {
             var productsFromDB = productRepo.getFilteredProducts(productParameters, productName);
             var products = _mapper.Map<List<ProductReadDto>>(productsFromDB);
             var totalCount = productRepo.GetNumOfProducts();
-            return new ProductPaginationReadDto
+            return new CategoryPaginationReadDto
             {
                 TotalCount = totalCount,
                 Products = products
