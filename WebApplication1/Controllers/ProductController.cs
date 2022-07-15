@@ -163,7 +163,7 @@ namespace WebApplication1.Controllers
         }
         
        [HttpPut("{id}/{quantity}")]
-       [Authorize(Policy = "Admin")]
+       [Authorize]
         public ActionResult UpdateProductQuantity(Guid id,int quantity)
         {
             var productToEdit = productRepo.GetById(id);
