@@ -52,7 +52,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Create(CategoryWriteDto category)
         {
             if (ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPut("{id}")]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id, CategoryUpdateDto category)
         {
             if (ModelState.IsValid)
@@ -125,7 +125,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpDelete("{id}")]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Delete(Guid id)
         {
             if (categoryRepo.GetById(id) != null)

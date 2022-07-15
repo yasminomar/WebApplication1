@@ -93,7 +93,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Create([FromForm]ProductWriteDto product)
         {
             if (ModelState.IsValid)
@@ -163,7 +163,7 @@ namespace WebApplication1.Controllers
         }
         
        [HttpPut("{id}/{quantity}")]
-        // [Authorize(Policy = "Admin")]
+       [Authorize(Policy = "Admin")]
         public ActionResult UpdateProductQuantity(Guid id,int quantity)
         {
             var productToEdit = productRepo.GetById(id);

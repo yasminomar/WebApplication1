@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly ICartRepository cartRepo;

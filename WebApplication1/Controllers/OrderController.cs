@@ -44,7 +44,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public ActionResult<IEnumerable<OrderReadDto>> GetAll()
         {
             var ordersFromDB = orderRepo.GetAll();
@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [Route("GetOrderHistory")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<List<OrderHistoryReadDto>>> GetOrderHistory()
         {
             var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
 
         
         [HttpGet("GetUserId")]
-        //[Authorize]
+        [Authorize]
         public async Task<string> GetUserId()
         {
             var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -85,7 +85,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpGet("{id}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult<OrderReadDto> GetById(Guid id)
         {
             Order order = orderRepo.GetById(id);
@@ -94,7 +94,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpGet("GetOrderByCartId/{cartId}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult<OrderReadDto> GetOrderByCartId(Guid cartId)
         {
             Order order = orderRepo.GetOrderByCartId(cartId);

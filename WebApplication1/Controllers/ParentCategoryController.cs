@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
         }
 
 
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public IActionResult Create(ParentCategoryWriteDto parentCategory)
         {
@@ -71,7 +71,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPut("{id}")]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id, ParentCategoryUpdateDto parentCategory)
         {
             if (ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpDelete("{id}")]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Delete(Guid id)
         {
             if (parentCategoryRepo.GetById(id) != null)
