@@ -130,7 +130,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Create(OrderWriteDto order)
         {
             if (ModelState.IsValid)
@@ -169,7 +169,7 @@ namespace WebApplication1.Controllers
         }
 
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Update(Guid id, OrderUpdateDto order)
         {
