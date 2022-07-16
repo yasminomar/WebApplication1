@@ -21,12 +21,7 @@ namespace WebApplication1.Repository
             return _context.Cart.FirstOrDefault(i => i.ApplicationUser.Id == userid);
         }
 
-        //public Cart Catr(string userId)
-        //{
-        //    var email = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.Email).Value;
-        //    var user = await _userManager.FindByEmailAsync(email); return _context.Cart.Where(i=>i.ApplicationUser.Id==)
-        //}
-
+      
      
     }
 }

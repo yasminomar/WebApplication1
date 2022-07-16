@@ -31,13 +31,7 @@ namespace WebApplication1.Repository
             _context.Order.Remove(deletedOrder);
 
         }
-        //public  string GetUserId()
-        //{
-        //    var username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-        //    var user =  userManager.FindByNameAsync(username);
-        //    return user.Id;
-        //}
-
+     
 
     }
 }

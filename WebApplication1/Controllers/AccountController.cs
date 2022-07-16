@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //save database
+            //save user in database with user manager
             ApplicationUser userModel = new ApplicationUser();
             userModel.Email = registerDto.Email;
             userModel.UserName = registerDto.UserName;
@@ -166,6 +166,8 @@ namespace WebApplication1.Controllers
 
 
         }
+
+
         #region Helpers
         private TokenDto GenerateToken(List<Claim> userClaims)
         {
@@ -186,7 +188,8 @@ namespace WebApplication1.Controllers
                 notBefore: DateTime.Now,
                 audience: configuration["JWT:ValidAudience"],
                 issuer: configuration["JWT:ValidIssuer"],
-                signingCredentials: methodUsedInGeneratingToken);
+                signingCredentials: methodUsedInGeneratingToken
+                );
             #endregion
 
             #region Generate the defined Token

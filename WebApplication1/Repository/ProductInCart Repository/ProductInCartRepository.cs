@@ -13,10 +13,7 @@ namespace WebApplication1.Repository
         {
             _context = context;
         }
-        //public List<ProductInCart> GetGroup(List<Guid> ids)
-        //{
-        //    return _context.ProductInCart.Where(i => ids.Contains(i.Id)).ToList();
-        //}
+      
         public void DeleteProductsInCartByProductId(Guid productId)
         {
             var productsInCart = _context.ProductInCart.Where(i => i.ProductId == productId).ToList();
@@ -48,11 +45,7 @@ namespace WebApplication1.Repository
             return productInCart.Id;
 
         }
-        //public void DeleteProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId)
-        //{
-        //    var productInCart = _context.ProductInCart.FirstOrDefault(i => i.CartId == cartId && i.ProductId == productId);
-        //    _context.ProductInCart.Remove(productInCart);
-        //}
+     
 
 
     }

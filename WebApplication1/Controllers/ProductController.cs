@@ -183,19 +183,7 @@ namespace WebApplication1.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
         [HttpPut("{id}")]
-       // [Authorize(Policy = "Admin")]
         public IActionResult Update(Guid id, [FromForm]ProductUpdateDto product)
         {
             if (ModelState.IsValid)
@@ -271,7 +259,6 @@ namespace WebApplication1.Controllers
 
 
         [HttpDelete("{id}")]
-        //[Authorize(Policy = "Admin")]
         public IActionResult Delete(Guid id)
         {
             if(productRepo.GetById(id) != null)

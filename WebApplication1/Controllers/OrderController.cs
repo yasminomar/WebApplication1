@@ -102,29 +102,6 @@ namespace WebApplication1.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //[HttpGet("userId/{userId}")]
-        ////[Authorize]
-        //public ActionResult<OrderReadDto> GetOrderHistoryByUserId(string userId)
-        //{
-        //    Order order = orderRepo.GetOrderHistoryByUserId(userId);
-        //    return _mapper.Map<OrderReadDto>(order);
-        //}
-
-
-
         
 
 
@@ -203,7 +180,6 @@ namespace WebApplication1.Controllers
 
 
         [HttpDelete("{id}")]
-        //[Authorize(Policy = "Admin")]
         public IActionResult Delete(Guid id)
         {
             if (orderRepo.GetById(id) != null)
@@ -227,7 +203,6 @@ namespace WebApplication1.Controllers
 
 
         [HttpDelete("DeleteOrderByCartId/{cartId}")]
-        //[Authorize(Policy = "Admin")]
         public IActionResult DeleteOrderByCartId(Guid cartId)
         {
            

@@ -51,14 +51,6 @@ namespace WebApplication1.Repository
                    .Where(p => p.Quantity > 0 && p.EnglishName.Contains(productName))
                    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
                    .Take(productParameters.PageSize)
-                   //.AsEnumerable()
-                   //.GroupBy(i => new { i.Category.Name, i.Category.Id })
-                   //.Select(g => new ProductGroupingOutput
-                   //{
-                   //    CategoryId = g.Key.Id,
-                   //    CategoryName = g.Key.Name,
-                   //    Products = g.OrderBy(p => p.EnglishName).ToList()
-                   //})
                    .ToList();
         }
         

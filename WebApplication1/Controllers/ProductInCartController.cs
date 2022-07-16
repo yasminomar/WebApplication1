@@ -47,6 +47,9 @@ namespace WebApplication1.Controllers
             ProductInCart productInCart = productInCartRepo.GetById(id);
             return _mapper.Map<ProductInCartReadDto>(productInCart);
         }
+
+
+
         [HttpGet]
         [Route("{cartId:Guid}")]
         public ActionResult<IEnumerable<ProductInCartReadDto>> GetProductsInCartByCartId(Guid cartId)
@@ -136,32 +139,6 @@ namespace WebApplication1.Controllers
 
 
 
-        //[HttpPut("updateQuantity/{id}")]
-        //public IActionResult updateQuantity(Guid cartId, ProductInCartWriteDto productInCart)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            var productInCartToEdit = productInCartRepo.GetProductsInCartByCartId(cartId);
-        //            if (productInCartToEdit is null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            _mapper.Map(productInCart, productInCartToEdit);
-        //            productInCartRepo.Update(productInCartToEdit);
-        //            productInCartRepo.SaveChanges();
-        //            return Ok(_mapper.Map<ProductInCartReadDto>(productInCartToEdit));
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return BadRequest(ex.Message);
-        //        }
-        //    }
-        //    return BadRequest(ModelState);
-        //}
-
 
 
         [HttpDelete("{id}")]
@@ -189,17 +166,6 @@ namespace WebApplication1.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         [HttpDelete("DeleteProductsInCartByCartId/{cartId}")]
         public ActionResult DeleteProductsInCartByCartId(Guid cartId)
         {
@@ -221,28 +187,6 @@ namespace WebApplication1.Controllers
         }
         
 
-
-
-
-        //[HttpDelete("{cartId}/{productId}")]
-        //public IActionResult DeleteProductInCartIdByCartIdAndProductId(Guid cartId, Guid productId)
-        //{
-        //    if (productInCartRepo.GetProductInCartIdByCartIdAndProductId(cartId, productId) != null)
-        //    {
-        //        try
-        //        {
-        //            var deletedproductInCart = productInCartRepo.GetById(id);
-        //            productInCartRepo.Delete(id);
-        //            return Ok(_mapper.Map<ProductInCartReadDto>(deletedproductInCart));
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return BadRequest(ex.Message);
-        //        }
-        //    }
-        //    return NotFound();
-        //}
 
 
     }
