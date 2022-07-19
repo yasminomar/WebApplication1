@@ -107,7 +107,7 @@ namespace WebApplication1.Controllers
                     {
                         if (product.Image == null)
                         {
-                            return BadRequest(new {error="image is require"});
+                            return BadRequest(new { message = "image is require"});
                         }
                         var file = Request.Form.Files[0];
 
@@ -118,7 +118,7 @@ namespace WebApplication1.Controllers
                         var allwedExtensions = new string[] { ".jpg", ".gif", ".BMP", ".png" };
                         if (!allwedExtensions.Any(ext => file.FileName.EndsWith(ext)))
                         {
-                            return BadRequest();
+                            return BadRequest(new { message = "enter image with this extentions '.jpg, .gif, .BMP, .png'" });
                         }
                         var folderName = Path.Combine("Resources", "img");
                         var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);

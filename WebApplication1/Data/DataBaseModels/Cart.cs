@@ -8,6 +8,5 @@ namespace WebApplication1.Models
         public Guid Id { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual List<ProductInCart> Products { get; set; }
-        //public Order Order { get; set; }
     }
 }
