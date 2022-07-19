@@ -23,16 +23,14 @@ namespace WebApplication1.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration configuration;
-        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ICartRepository cartRepo;
 
 
 
-        public AccountController(UserManager<ApplicationUser> userManager, ICartRepository cartRepo, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        public AccountController(UserManager<ApplicationUser> userManager, ICartRepository cartRepo, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.configuration = configuration;
-            this.signInManager = signInManager;
             this.cartRepo = cartRepo;
         }
 
@@ -54,7 +52,6 @@ namespace WebApplication1.Controllers
             IdentityResult result = await userManager.CreateAsync(userModel, registerDto.Password);
             if (result.Succeeded)
             {
-                await signInManager.SignInAsync(userModel, false);
                 Cart Cart = new Cart();
                 Cart.ApplicationUser = userModel;
                 Cart.Id= Guid.NewGuid();
