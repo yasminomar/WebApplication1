@@ -113,7 +113,7 @@ namespace WebApplication1.Controllers
 
                         if (file.Length > 1_000_000)
                         {
-                            return BadRequest();
+                            return BadRequest(new { message = "image size must be less than 1 MB" });
                         }
                         var allwedExtensions = new string[] { ".jpg", ".gif", ".BMP", ".png" };
                         if (!allwedExtensions.Any(ext => file.FileName.EndsWith(ext)))
